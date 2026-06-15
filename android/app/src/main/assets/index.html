@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>文俊影视</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- 顶层导航 -->
+<div id="app">
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span class="status-time" id="statusTime">09:41</span>
+    <span class="status-title">文俊影视</span>
+    <span class="status-battery">🔋</span>
+  </div>
+
+  <!-- 页面容器 -->
+  <div class="page-container" id="pageContainer">
+    <!-- 首页 -->
+    <div class="page active" id="page-home">
+      <div class="home-header">
+        <div class="logo-area">
+          <div class="logo-icon">🎬</div>
+          <div>
+            <h1>文俊影视</h1>
+            <p>海量影视 · 秒播高清</p>
+          </div>
+        </div>
+        <div class="search-bar" onclick="switchTab('vod')">
+          <span class="search-icon">🔍</span>
+          <span class="search-placeholder">搜索电影、电视剧、短剧...</span>
+        </div>
+      </div>
+
+      <!-- 分类导航 -->
+      <div class="category-nav">
+        <div class="category-item active" onclick="switchTab('vod')">
+          <span class="cat-icon">🎬</span><span>电影</span>
+        </div>
+        <div class="category-item" onclick="switchTab('vod');App.selectVodGroup(1)">
+          <span class="cat-icon">📺</span><span>电视剧</span>
+        </div>
+        <div class="category-item" onclick="switchTab('vod');App.selectVodGroup(2)">
+          <span class="cat-icon">🎪</span><span>综艺</span>
+        </div>
+        <div class="category-item" onclick="switchTab('vod');App.selectVodGroup(3)">
+          <span class="cat-icon">🤡</span><span>动漫</span>
+        </div>
+        <div class="category-item" onclick="switchTab('drama')">
+          <span class="cat-icon">🎭</span><span>短剧</span>
+        </div>
+      </div>
+
+      <!-- 推荐轮播 -->
+      <div class="banner-section">
+        <div class="banner-scroll" id="bannerScroll">
+          <div class="banner-card" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+            <div class="banner-info">
+              <h3>热门推荐</h3>
+              <p>每日更新 · 海量资源</p>
+            </div>
+          </div>
+          <div class="banner-card" style="background:linear-gradient(135deg,#f093fb,#f5576c)">
+            <div class="banner-info">
+              <h3>4K专区</h3>
+              <p>高清画质 · 极致体验</p>
+            </div>
+          </div>
+          <div class="banner-card" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">
+            <div class="banner-info">
+              <h3>短剧热榜</h3>
+              <p>上头短剧 · 一刷停不下来</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 推荐列表 -->
+      <div class="section">
+        <div class="section-header">
+          <h2>🔥 热门推荐</h2>
+          <span class="section-more" onclick="switchTab('vod')">更多 ›</span>
+        </div>
+        <div class="vod-grid" id="homeVodGrid">
+          <div class="vod-card skeleton"></div>
+          <div class="vod-card skeleton"></div>
+          <div class="vod-card skeleton"></div>
+          <div class="vod-card skeleton"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 秒播影视页 -->
+    <div class="page" id="page-vod">
+      <div class="page-header">
+        <h2>🎬 秒播影视</h2>
+      </div>
+      <div class="search-bar active-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="vodSearchInput" class="search-input" placeholder="搜索电影、电视剧..."
+               onkeydown="if(event.key==='Enter')searchVod()">
+        <button class="search-btn" onclick="searchVod()">搜索</button>
+      </div>
+      <div class="vod-group-tabs" id="vodGroups"></div>
+      <div class="vod-categories" id="vodCategories"></div>
+      <div class="vod-grid" id="vodGrid">
+        <div class="empty-state">选择分类开始浏览</div>
+      </div>
+      <div class="pagination" id="vodPagination"></div>
+    </div>
+
+    <!-- 直播页 -->
+    <div class="page" id="page-live">
+      <div class="page-header">
+        <h2>📺 直播平台</h2>
+      </div>
+      <div class="live-platform-tabs" id="livePlatformTabs"></div>
+      <div class="live-room-grid" id="liveRoomGrid">
+        <div class="empty-state">选择平台查看直播</div>
+      </div>
+    </div>
+
+    <!-- 短剧页 -->
+    <div class="page" id="page-drama">
+      <div class="page-header">
+        <h2>🎭 短剧大全</h2>
+      </div>
+      <div class="search-bar active-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="dramaSearchInput" class="search-input" placeholder="搜索短剧..."
+               onkeydown="if(event.key==='Enter')searchDrama()">
+        <button class="search-btn" onclick="searchDrama()">搜索</button>
+      </div>
+      <div class="drama-tabs">
+        <div class="drama-tab active" onclick="loadDramas('list')">全部短剧</div>
+        <div class="drama-tab" onclick="loadDramas('today')">今日更新</div>
+      </div>
+      <div class="drama-list" id="dramaList">
+        <div class="empty-state">加载中...</div>
+      </div>
+    </div>
+
+    <!-- 我的页 -->
+    <div class="page" id="page-me">
+      <div class="page-header">
+        <h2>👤 我的</h2>
+      </div>
+      <div class="profile-card">
+        <div class="avatar">🎬</div>
+        <h3>文俊影视</h3>
+        <p>Version 1.0.0</p>
+      </div>
+      <div class="menu-list">
+        <div class="menu-item"><span>📋</span><span>观看历史</span><span>›</span></div>
+        <div class="menu-item"><span>⭐</span><span>我的收藏</span><span>›</span></div>
+        <div class="menu-item"><span>⚙️</span><span>设置</span><span>›</span></div>
+        <div class="menu-item"><span>ℹ️</span><span>关于</span><span>›</span></div>
+      </div>
+      <div class="source-info">
+        <h3>📡 实时数据统计</h3>
+        <div class="stats-grid">
+          <div class="stat-item"><span class="stat-num">7.7万+</span><span>影视资源</span></div>
+          <div class="stat-item"><span class="stat-num">26</span><span>分类频道</span></div>
+          <div class="stat-item"><span class="stat-num">5</span><span>内容板块</span></div>
+          <div class="stat-item"><span class="stat-num">实时</span><span>数据更新</span></div>
+        </div>
+        <div style="margin-top:12px;font-size:11px;color:#6c6c8a;text-align:center;">
+          电影·电视剧·综艺·动漫·纪录 · VOD: suoniapi · 短剧: duanju.click
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部导航 -->
+  <div class="bottom-nav">
+    <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">首页</span>
+    </div>
+    <div class="nav-item" data-tab="vod" onclick="switchTab('vod')">
+      <span class="nav-icon">🎬</span>
+      <span class="nav-label">秒播</span>
+    </div>
+    <div class="nav-item" data-tab="live" onclick="switchTab('live')">
+      <span class="nav-icon">📺</span>
+      <span class="nav-label">直播</span>
+    </div>
+    <div class="nav-item" data-tab="drama" onclick="switchTab('drama')">
+      <span class="nav-icon">🎭</span>
+      <span class="nav-label">短剧</span>
+    </div>
+    <div class="nav-item" data-tab="me" onclick="switchTab('me')">
+      <span class="nav-icon">👤</span>
+      <span class="nav-label">我的</span>
+    </div>
+  </div>
+</div>
+
+<!-- 视频播放器浮层 -->
+<div class="player-overlay" id="playerOverlay">
+  <div class="player-header">
+    <button class="player-back" id="playerBackBtn">✕</button>
+    <span class="player-title" id="playerTitle">播放中</span>
+  </div>
+  <div class="player-container" id="playerContainer">
+    <div class="player-placeholder">
+      <div class="player-loading">🎬 加载中...</div>
+    </div>
+  </div>
+</div>
+
+<!-- 剧集选择器浮层 -->
+<div class="episode-picker" id="episodePicker">
+  <div class="ep-picker-header">
+    <button class="ep-picker-back" onclick="App.closeEpisodePicker()">✕</button>
+    <span class="ep-picker-title" id="epPickerTitle">选择剧集</span>
+  </div>
+  <div class="ep-source-tabs" id="epSourceTabs"></div>
+  <div class="ep-grid" id="epGrid"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/player.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

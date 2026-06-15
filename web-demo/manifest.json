@@ -1,0 +1,20 @@
+{
+  "name": "文俊影视",
+  "short_name": "文俊影视",
+  "description": "海量高清影视APP - 电影电视剧综艺动漫纪录片短剧直播",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0F1A",
+  "theme_color": "#6C5CE7",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 108 108'><rect width='108' height='108' rx='24' fill='%236C5CE7'/><polygon points='38,34 74,54 38,74' fill='white'/></svg>",
+      "sizes": "108x108",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "zh-CN",
+  "categories": ["entertainment", "video"]
+}

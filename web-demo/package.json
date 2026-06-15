@@ -1,0 +1,10 @@
+{
+  "name": "wenjun-video",
+  "version": "1.0.0",
+  "description": "文俊影视 - 海量高清影视APP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}

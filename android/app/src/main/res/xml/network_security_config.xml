@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 允许明文流量（开发调试需要） -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- 各视频源域名 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">suoniapi.com</domain>
+        <domain includeSubdomains="true">hhzyapi.com</domain>
+        <domain includeSubdomains="true">hhuus.com</domain>
+        <domain includeSubdomains="true">duanju.click</domain>
+        <domain includeSubdomains="true">rstu6.com</domain>
+        <domain includeSubdomains="true">huya.com</domain>
+        <domain includeSubdomains="true">douyu.com</domain>
+        <domain includeSubdomains="true">douyucdn.cn</domain>
+        <domain includeSubdomains="true">bilibili.com</domain>
+        <domain includeSubdomains="true">pan.quark.cn</domain>
+        <domain includeSubdomains="true">pan.baidu.com</domain>
+        <domain includeSubdomains="true">9280.kstore.vip</domain>
+    </domain-config>
+</network-security-config>
